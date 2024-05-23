@@ -1,0 +1,183 @@
+.grid-container {
+  width: 99%;
+  margin-inline: auto;
+  height: calc(100vh - 200px);
+  display: grid;
+  grid-template-columns: repeat(60, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+}
+
+.node-container {
+  display: block;
+
+}
+
+.node {
+  width: 100%;
+  height: 100%;
+  outline: 1px solid rgba(152, 146, 146, 0.718);
+  background-color: rgb(254, 255, 255);
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.node-icon {
+  display: none;
+}
+
+.green {
+  background-color: rgb(15, 218, 32);
+  animation: obstacle-animate 0.5s ease-in-out;
+}
+
+
+
+.red {
+  background-color: #ff1a09;
+  animation: obstacle-animate 0.5s ease-in-out;
+}
+
+
+.obstacle {
+  background-color: rgb(128, 39, 212);
+  border-collapse: collapse;
+  animation: obstacle-animate 0.3s ease-in-out;
+}
+
+
+
+
+
+
+
+@keyframes selection {
+  0% {
+    transform: scale(0.2);
+    background-color: #caf0f8;
+    border-radius: 50%;
+  }
+
+  25% {
+    transform: scale(0.4);
+    background-color: #90e0ef;
+    border-radius: 35%;
+  }
+
+  50% {
+    transform: scale(0.6);
+    background-color: #00b4d8;
+    border-radius: 20%;
+  }
+
+  75% {
+    transform: scale(0.8);
+    background-color: #0077b6;
+    border-radius: 5%;
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: #060874;
+  }
+}
+
+.grid-container .purple {
+  background-color: #f2ff00;
+  animation: path 1.2s ease-in-out forwards;
+}
+
+
+@keyframes path {
+  0% {
+    background-color: #FFEA00;
+    border: 4px solid white;
+  }
+
+  25% {
+    background-color: #FFDD00;
+    border: 3px solid rgb(223, 220, 220);
+  }
+
+  50% {
+    background-color: #FFD000;
+    border: 2px solid rgb(211, 206, 206);
+  }
+
+  75% {
+    background-color: #f8c009;
+    border: 1px solid rgb(109, 104, 104);
+  }
+
+  100% {
+    background-color: #f2ff00;
+    border: 1px solid rgba(5, 26, 108, 0.499);
+  }
+}
+
+@keyframes obstacle-animate {
+  0% {
+    transform: scale(0.2);
+    border-radius: 50%;
+  }
+
+  25% {
+    transform: scale(0.4);
+    border-radius: 35%;
+  }
+
+  50% {
+    transform: scale(0.6);
+    border-radius: 20%;
+  }
+
+  75% {
+    transform: scale(0.8);
+    border-radius: 5%;
+  }
+
+  100% {
+    transform: scale(1);
+    border-radius: none;
+  }
+}
+
+.blue {
+  background-color: #060874;
+}
+
+.weight {
+  animation: obstacle-animate 0.3s ease-in-out forwards;
+}
+
+.weight .node-icon {
+  display: block;
+  color: crimson;
+  font-size: 1rem;
+}
+
+.green .node-icon,
+.red .node-icon {
+  display: none;
+}
+
+.yellow {
+  background-color: #f2ff00;
+}
+
+
+.greenNone {
+  background-color: rgb(15, 218, 32);
+}
+
+.redNone {
+  background-color: #ff1a09;
+}
+
+.selected {
+  animation: selection 1.1s ease-in-out forwards;
+  background-color: #060874;
+  border-color: rgba(255, 255, 255, 0.279);
+}

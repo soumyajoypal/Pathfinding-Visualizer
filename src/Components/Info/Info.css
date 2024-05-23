@@ -1,0 +1,16 @@
+.info-list {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.node-box {
+    width: 20px;
+    height: 20px;
+}
