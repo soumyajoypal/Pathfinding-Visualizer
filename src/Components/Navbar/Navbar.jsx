@@ -11,6 +11,8 @@ import { Djikstrasync } from "../../Utils/Algos/Djikstras.js";
 import { clearVisited } from "../../Utils/clearFunctions.js";
 import { clearWeights } from "../../Utils/clearFunctions.js";
 import { recursiveDivision } from "../../MazeAlgos/recursiveDivision.js";
+import { recursiveDivisionHorizontal } from "../../MazeAlgos/recursiveHorizontal.js";
+import { recursiveDivisionVertical } from "../../MazeAlgos/recursiveVertical.js";
 import Select from "react-select";
 import Info from "../Info/Info.jsx";
 const ALGO_OPTIONS = [
@@ -25,6 +27,8 @@ const WALL_OPTIONS = [
   { value: "obstacle", label: "Generate Random Wall-Nodes" },
   { value: "weight", label: "Generate Random Weight-Nodes" },
   { value: "maze", label: "Generate Maze" },
+  { value: "maze-H", label: "Generate Maze(Horizontal-Skew)" },
+  { value: "maze-V", label: "Generate Maze(Vertical-Skew)" },
 ];
 const SPEED_OPTIONS = [
   { value: 5, label: "Fast" },
@@ -100,9 +104,15 @@ const Navbar = ({
             if (!startCheck) {
               handleSelectedAlgo(null);
               if (!isWeighted && option.value === "weight" && selectedOption) {
-              } else if (option.value === "maze") {
+              } else if (
+                option.value === "maze" ||
+                option.value === "maze-H" ||
+                option.value === "maze-V"
+              ) {
                 clearAll();
-                recursiveDivision();
+                if (option.value === "maze") recursiveDivision();
+                if (option.value === "maze-H") recursiveDivisionHorizontal();
+                if (option.value === "maze-V") recursiveDivisionVertical();
               } else {
                 clearAll();
                 randomWallsGenerator(option.value);

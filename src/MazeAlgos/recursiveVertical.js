@@ -45,7 +45,7 @@ const recursiveDivisionUtil = (
         startCol,
         endCol,
         surroundWall,
-        orientation
+        "V"
       );
     } else {
       recursiveDivisionUtil(
@@ -55,11 +55,10 @@ const recursiveDivisionUtil = (
         startCol,
         endCol,
         surroundWall,
-        "H"
+        "V"
       );
     }
     if (endRow - (currentRow + 2) > endCol - startCol) {
-      //bottom section horizontal cut
       recursiveDivisionUtil(
         nodesArray,
         currentRow + 2,
@@ -67,7 +66,7 @@ const recursiveDivisionUtil = (
         startCol,
         endCol,
         surroundWall,
-        orientation
+        "V"
       );
     } else {
       recursiveDivisionUtil(
@@ -77,7 +76,7 @@ const recursiveDivisionUtil = (
         startCol,
         endCol,
         surroundWall,
-        "V"
+        orientation
       );
     }
   } else {
@@ -104,7 +103,7 @@ const recursiveDivisionUtil = (
         startCol,
         currentCol - 2,
         surroundWall,
-        "H"
+        orientation
       );
     } else {
       recursiveDivisionUtil(
@@ -114,7 +113,7 @@ const recursiveDivisionUtil = (
         startCol,
         currentCol - 2,
         surroundWall,
-        "H"
+        orientation
       );
     }
     if (endCol - (currentCol + 2) < endRow - startRow) {
@@ -151,8 +150,8 @@ const mazeAnimation = async (nodesArray) => {
     }
   }
 };
-export const recursiveDivisionHorizontal = () => {
+export const recursiveDivisionVertical = () => {
   let nodesArray = [];
-  recursiveDivisionUtil(nodesArray, 2, 17, 2, 57, false, "H");
+  recursiveDivisionUtil(nodesArray, 2, 17, 2, 57, false, "V");
   mazeAnimation(nodesArray);
 };
