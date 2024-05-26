@@ -9,10 +9,6 @@ export const BFS = async (src, dest, speed) => {
   let path = [];
   let nodesArray = [];
   BFSutil(src, dest, nodesArray, path);
-  if (path.length === 0) {
-    alert("Path Not Available");
-    return;
-  }
   await animate(nodesArray, speed);
   await PrintPath(path);
 };
@@ -23,7 +19,9 @@ export const BFSsync = (src, dest) => {
   BFSutil(src, dest, nodesArray, path);
   animateSync(nodesArray, path);
 };
+let count = 1;
 const BFSutil = (src, dest, nodesArray, path) => {
+  console.log(`function call ${count}`);
   const visited = create2DArray(20, 60);
   let queue = [];
   getCurrObj(src.i, src.j, nodesArray);
@@ -66,4 +64,6 @@ const BFSutil = (src, dest, nodesArray, path) => {
       }
     }
   }
+  console.log(`function end ${count}`);
+  count++;
 };

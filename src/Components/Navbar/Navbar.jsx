@@ -13,6 +13,8 @@ import { clearWeights } from "../../Utils/clearFunctions.js";
 import { recursiveDivision } from "../../MazeAlgos/recursiveDivision.js";
 import { recursiveDivisionHorizontal } from "../../MazeAlgos/recursiveHorizontal.js";
 import { recursiveDivisionVertical } from "../../MazeAlgos/recursiveVertical.js";
+import { Astarsync } from "../../Utils/Algos/Astar.js";
+import { Astar } from "../../Utils/Algos/Astar.js";
 import Select from "react-select";
 import Info from "../Info/Info.jsx";
 const ALGO_OPTIONS = [
@@ -21,6 +23,10 @@ const ALGO_OPTIONS = [
   {
     value: { ASYNC: Djiskstras, SYNC: Djikstrasync },
     label: "Djikstra's Algorithm",
+  },
+  {
+    value: { ASYNC: Astar, SYNC: Astarsync },
+    label: "A* Algorithm",
   },
 ];
 const WALL_OPTIONS = [
@@ -31,9 +37,9 @@ const WALL_OPTIONS = [
   { value: "maze-V", label: "Generate Maze(Vertical-Skew)" },
 ];
 const SPEED_OPTIONS = [
-  { value: 5, label: "Fast" },
-  { value: 15, label: "Medium" },
-  { value: 105, label: "Slow" },
+  { value: 0, label: "Fast" },
+  { value: 25, label: "Medium" },
+  { value: 225, label: "Slow" },
 ];
 const Navbar = ({
   handleStart,
@@ -69,6 +75,16 @@ const Navbar = ({
       display: "none",
     }),
   };
+  const handleMaze = async (value) => {
+    clearAll();
+    handleStart(true);
+    setStartCheck(true);
+    if (value === "maze") await recursiveDivision();
+    if (value === "maze-H") await recursiveDivisionHorizontal();
+    if (value === "maze-V") await recursiveDivisionVertical();
+    handleStart(false);
+    setStartCheck(false);
+  };
   return (
     <div className="navbar-section">
       <div className="navbar-header">
@@ -80,7 +96,10 @@ const Navbar = ({
             if (!startCheck) {
               handleSelectedAlgo(null);
               clearVisited();
-              if (option.label === "Djikstra's Algorithm") {
+              if (
+                option.label === "Djikstra's Algorithm" ||
+                option.label === "A* Algorithm"
+              ) {
                 checkWeightedAlgo(true);
                 setIsWeighted(true);
               } else {
@@ -100,7 +119,7 @@ const Navbar = ({
           options={WALL_OPTIONS}
           placeholder="Mazes and Walls"
           value={null}
-          onChange={(option) => {
+          onChange={async (option) => {
             if (!startCheck) {
               handleSelectedAlgo(null);
               if (!isWeighted && option.value === "weight" && selectedOption) {
@@ -109,10 +128,7 @@ const Navbar = ({
                 option.value === "maze-H" ||
                 option.value === "maze-V"
               ) {
-                clearAll();
-                if (option.value === "maze") recursiveDivision();
-                if (option.value === "maze-H") recursiveDivisionHorizontal();
-                if (option.value === "maze-V") recursiveDivisionVertical();
+                await handleMaze(option.value);
               } else {
                 clearAll();
                 randomWallsGenerator(option.value);

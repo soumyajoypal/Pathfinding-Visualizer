@@ -164,8 +164,8 @@ const mazeAnimation = async (nodesArray) => {
     }
   }
 };
-export const recursiveDivision = () => {
+export const recursiveDivision = async () => {
   let nodesArray = [];
   recursiveDivisionUtil(nodesArray, 2, 17, 2, 57, false, "H");
-  mazeAnimation(nodesArray);
+  await mazeAnimation(nodesArray);
 };

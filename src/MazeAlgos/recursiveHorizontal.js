@@ -1,4 +1,3 @@
-
 const recursiveDivisionUtil = (
   nodesArray,
   startRow,
@@ -151,8 +150,8 @@ const mazeAnimation = async (nodesArray) => {
     }
   }
 };
-export const recursiveDivisionHorizontal = () => {
+export const recursiveDivisionHorizontal = async () => {
   let nodesArray = [];
   recursiveDivisionUtil(nodesArray, 2, 17, 2, 57, false, "H");
-  mazeAnimation(nodesArray);
+  await mazeAnimation(nodesArray);
 };

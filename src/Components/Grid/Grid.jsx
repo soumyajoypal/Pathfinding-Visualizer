@@ -163,10 +163,6 @@ const Grid = () => {
       if (res.contains(opt)) {
         res.remove(opt);
         res.add("obstacle");
-        if (algoSelect) {
-          const syncAlgo = algoSelect.value.SYNC;
-          syncAlgo(src, dest);
-        }
         return;
       }
     }
