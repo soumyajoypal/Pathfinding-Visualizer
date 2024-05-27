@@ -145,7 +145,12 @@ const mazeAnimation = async (nodesArray) => {
       `[data-row="${node.i}"][data-column="${node.j}"]`
     );
     await new Promise((resolve) => setTimeout(resolve, 2));
-    if (!cell.classList.contains("green") && !cell.classList.contains("red")) {
+    if (
+      !cell.classList.contains("green") &&
+      !cell.classList.contains("red") &&
+      !cell.classList.contains("greenNone") &&
+      !cell.classList.contains("redNone")
+    ) {
       cell.classList.add("obstacle");
     }
   }

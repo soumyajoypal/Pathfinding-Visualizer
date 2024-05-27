@@ -15,6 +15,8 @@ import { recursiveDivisionHorizontal } from "../../MazeAlgos/recursiveHorizontal
 import { recursiveDivisionVertical } from "../../MazeAlgos/recursiveVertical.js";
 import { Astarsync } from "../../Utils/Algos/Astar.js";
 import { Astar } from "../../Utils/Algos/Astar.js";
+import { GreedyBFS } from "../../Utils/Algos/GreedyBfs.js";
+import { GreedyBFSsync } from "../../Utils/Algos/GreedyBfs.js";
 import Select from "react-select";
 import Info from "../Info/Info.jsx";
 const ALGO_OPTIONS = [
@@ -27,6 +29,10 @@ const ALGO_OPTIONS = [
   {
     value: { ASYNC: Astar, SYNC: Astarsync },
     label: "A* Algorithm",
+  },
+  {
+    value: { ASYNC: GreedyBFS, SYNC: GreedyBFSsync },
+    label: "Greedy BFS",
   },
 ];
 const WALL_OPTIONS = [
@@ -98,7 +104,8 @@ const Navbar = ({
               clearVisited();
               if (
                 option.label === "Djikstra's Algorithm" ||
-                option.label === "A* Algorithm"
+                option.label === "A* Algorithm" ||
+                option.label === "Greedy BFS"
               ) {
                 checkWeightedAlgo(true);
                 setIsWeighted(true);
