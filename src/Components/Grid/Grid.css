@@ -151,8 +151,8 @@
 
 .weight .node-icon {
   display: block;
-  color: crimson;
-  font-size: 1rem;
+  color: rgb(154, 4, 127);
+  font-size: 0.8rem;
 }
 
 .green .node-icon,

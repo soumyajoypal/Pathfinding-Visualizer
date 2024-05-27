@@ -1,5 +1,4 @@
 import PrintPath from "../Animations/printPath";
-import { create2DArray } from "./DFS";
 import { animate } from "../Animations/animations";
 import { clearVisited } from "../clearVisited";
 import animateSync from "../animateSync";

@@ -1,21 +1,19 @@
-import getCurrObj from "../getCurrObj";
 import { animate } from "../Animations/animations";
 import printPath from "../Animations/printPath";
 import { clearVisited } from "../clearFunctions";
 import animateSync from "../animateSync";
-
-export const create2DArray = (rows, columns) => {
-  return Array.from({ length: rows }, () => Array(columns).fill(false));
-};
-
+class Cell {
+  constructor(i, j, obstacle) {
+    this.i = i;
+    this.j = j;
+    this.visited = false;
+    this.obstacle = obstacle;
+  }
+}
 const DFS = async (src, dest, speed) => {
-  const visited = create2DArray(20, 60);
   const path = [];
   let nodesArray = [];
-  const source = getCurrObj(src.i, src.j, nodesArray);
-  const destination = getCurrObj(dest.i, dest.j, nodesArray);
-
-  DFSutil(source, destination, visited, path, nodesArray);
+  DFSutil(src, dest, path, nodesArray);
   if (path.length === 0) {
     alert("No path available");
     return;
@@ -25,71 +23,61 @@ const DFS = async (src, dest, speed) => {
 };
 export const DFSsync = (src, dest) => {
   clearVisited();
-  const visited = create2DArray(20, 60);
   const path = [];
   let nodesArray = [];
-  const source = getCurrObj(src.i, src.j, nodesArray);
-  const destination = getCurrObj(dest.i, dest.j, nodesArray);
-  DFSutil(source, destination, visited, path, nodesArray);
+  DFSutil(src, dest, path, nodesArray);
   animateSync(nodesArray, path);
 };
-const DFSutil = (curr, dest, visited, path, nodesArray) => {
-  if (!curr || visited[curr.i][curr.j] || !curr.valid) {
+const valid = (i, j, arr) => {
+  if (
+    i < 0 ||
+    j < 0 ||
+    i >= 20 ||
+    j >= 60 ||
+    arr[i][j].obstacle === true ||
+    arr[i][j].visited === true
+  ) {
     return false;
   }
-
-  visited[curr.i][curr.j] = true;
-
-  if (curr.i === dest.i && curr.j === dest.j) {
-    path.push(curr);
+  return true;
+};
+const DFSutil = (src, dest, path, nodesArray) => {
+  let arr = Array.from({ length: 20 }, (_, i) =>
+    Array.from({ length: 60 }, (_, j) => {
+      const res = document.querySelector(
+        `[data-row="${i}"][data-column="${j}"]`
+      );
+      return new Cell(i, j, res.classList.contains("obstacle"));
+    })
+  );
+  const source = arr[src.i][src.j];
+  recursiveFunction(source, dest, arr, nodesArray, path);
+};
+const recursiveFunction = (curr, dest, arr, nodesArray, path) => {
+  curr.visited = true;
+  let { i, j } = curr;
+  path.push({ i, j });
+  if (i === dest.i && j === dest.j) {
+    nodesArray.pop();
     return true;
   }
-
-  path.push(curr);
-
-  if (
-    DFSutil(
-      getCurrObj(curr.i, curr.j + 1, nodesArray),
-      dest,
-      visited,
-      path,
-      nodesArray
-    )
-  )
-    return true;
-  if (
-    DFSutil(
-      getCurrObj(curr.i + 1, curr.j, nodesArray),
-      dest,
-      visited,
-      path,
-      nodesArray
-    )
-  )
-    return true;
-  if (
-    DFSutil(
-      getCurrObj(curr.i - 1, curr.j, nodesArray),
-      dest,
-      visited,
-      path,
-      nodesArray
-    )
-  )
-    return true;
-  if (
-    DFSutil(
-      getCurrObj(curr.i, curr.j - 1, nodesArray),
-      dest,
-      visited,
-      path,
-      nodesArray
-    )
-  )
-    return true;
-
+  const directions = [
+    [i, j + 1],
+    [i + 1, j],
+    [i - 1, j],
+    [i, j - 1],
+  ];
+  for (const [ni, nj] of directions) {
+    if (valid(ni, nj, arr)) {
+      nodesArray.push({ i: ni, j: nj });
+      if (
+        recursiveFunction(arr[ni][nj], dest, arr, nodesArray, path) === true
+      ) {
+        return true;
+      }
+    }
+  }
   path.pop();
   return false;
 };
-
 export default DFS;

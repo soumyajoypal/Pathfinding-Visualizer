@@ -57,7 +57,6 @@ const Djiskstrasutil = (src, dest, nodesArray, path) => {
       );
     })
   );
-  console.log(arr);
   const start = arr[src.i][src.j];
   start.cost = 0;
   start.parent_i = src.i;

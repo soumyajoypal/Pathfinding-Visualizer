@@ -1,7 +1,7 @@
 const printPath = async (path) => {
   path.shift();
   path.pop();
-  await new Promise((resolve) => setTimeout(resolve, 20));
+  await new Promise((resolve) => setTimeout(resolve, 100));
   for (const item of path) {
     await new Promise((resolve) => setTimeout(resolve, 30));
     await asynchOperation(item);

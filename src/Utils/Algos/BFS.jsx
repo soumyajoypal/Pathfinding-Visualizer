@@ -1,14 +1,24 @@
 import PrintPath from "../Animations/printPath";
-import getCurrObj from "../getCurrObj";
-import { create2DArray } from "./DFS";
 import { animate } from "../Animations/animations";
 import { clearVisited } from "../clearFunctions";
 import animateSync from "../animateSync";
+
+class Cell {
+  constructor(i, j, obstacle) {
+    this.i = i;
+    this.j = j;
+    this.parent_i = -1;
+    this.parent_j = -1;
+    this.visited = false;
+    this.obstacle = obstacle;
+  }
+}
 
 export const BFS = async (src, dest, speed) => {
   let path = [];
   let nodesArray = [];
   BFSutil(src, dest, nodesArray, path);
+  console.log(nodesArray);
   await animate(nodesArray, speed);
   await PrintPath(path);
 };
@@ -19,51 +29,66 @@ export const BFSsync = (src, dest) => {
   BFSutil(src, dest, nodesArray, path);
   animateSync(nodesArray, path);
 };
-let count = 1;
+const isValid = (r, c, grid) => {
+  if (
+    r < 0 ||
+    c < 0 ||
+    r >= 20 ||
+    c >= 60 ||
+    grid[r][c].obstacle === true ||
+    grid[r][c].visited === true
+  ) {
+    return false;
+  }
+  return true;
+};
 const BFSutil = (src, dest, nodesArray, path) => {
-  console.log(`function call ${count}`);
-  const visited = create2DArray(20, 60);
   let queue = [];
-  getCurrObj(src.i, src.j, nodesArray);
-  queue.push({ i: src.i, j: src.j });
-  let parent = {};
-  while (queue.length) {
-    let curr = queue.shift();
-    let currObj = getCurrObj(curr.i, curr.j, nodesArray);
-    if (!visited[curr.i][curr.j] && currObj.valid) {
-      visited[curr.i][curr.j] = true;
-      if (curr.i === dest.i && curr.j === dest.j) {
-        let temp = curr;
-        while (temp.i !== src.i || temp.j !== src.j) {
-          path.unshift(temp);
-          temp = parent[`${temp.i}-${temp.j}`];
+  let arr = Array.from({ length: 20 }, (_, i) =>
+    Array.from({ length: 60 }, (_, j) => {
+      const res = document.querySelector(
+        `[data-row="${i}"][data-column="${j}"]`
+      );
+      return new Cell(i, j, res.classList.contains("obstacle"));
+    })
+  );
+  const start = arr[src.i][src.j];
+  start.parent_i = src.i;
+  start.parent_j = src.j;
+  queue.push(start);
+  while (queue.length > 0) {
+    const curr = queue.shift();
+    let { i, j } = curr;
+    if (!arr[i][j].visited) {
+      arr[i][j].visited = true;
+      if (i === dest.i && j === dest.j) {
+        while (!(i === src.i && j === src.j)) {
+          path.push({ i, j });
+          const temp_i = arr[i][j].parent_i;
+          const temp_j = arr[i][j].parent_j;
+          i = temp_i;
+          j = temp_j;
         }
-        path.unshift(src);
-        break;
+        path.push(src);
+        path.reverse();
+        return;
       }
-      // Explore neighbors
-      // Top
-      if (curr.i - 1 >= 0 && !visited[curr.i - 1][curr.j]) {
-        queue.push({ i: curr.i - 1, j: curr.j });
-        parent[`${curr.i - 1}-${curr.j}`] = { i: curr.i, j: curr.j };
+      if (start.i !== i || start.j !== j) {
+        nodesArray.push({ i, j });
       }
-      // Left
-      if (curr.j - 1 >= 0 && !visited[curr.i][curr.j - 1]) {
-        queue.push({ i: curr.i, j: curr.j - 1 });
-        parent[`${curr.i}-${curr.j - 1}`] = { i: curr.i, j: curr.j };
-      }
-      // Right
-      if (curr.j + 1 < 60 && !visited[curr.i][curr.j + 1]) {
-        queue.push({ i: curr.i, j: curr.j + 1 });
-        parent[`${curr.i}-${curr.j + 1}`] = { i: curr.i, j: curr.j };
-      }
-      // Down
-      if (curr.i + 1 < 20 && !visited[curr.i + 1][curr.j]) {
-        queue.push({ i: curr.i + 1, j: curr.j });
-        parent[`${curr.i + 1}-${curr.j}`] = { i: curr.i, j: curr.j };
+      const directions = [
+        [i - 1, j],
+        [i + 1, j],
+        [i, j + 1],
+        [i, j - 1],
+      ];
+      for (const [ni, nj] of directions) {
+        if (isValid(ni, nj, arr)) {
+          arr[ni][nj].parent_i = i;
+          arr[ni][nj].parent_j = j;
+          queue.push(arr[ni][nj]);
+        }
       }
     }
   }
-  console.log(`function end ${count}`);
-  count++;
 };
