@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./Navbar.css";
-import { BFS } from "../../Utils/Algos/BFS.jsx";
+import { BFS } from "../../Utils/Algos/BFS.js";
 import { randomWallsGenerator } from "../../Utils/randomWalls";
-import DFS from "../../Utils/Algos/DFS.jsx";
+import DFS from "../../Utils/Algos/DFS.js";
 import { Djiskstras } from "../../Utils/Algos/Djikstras.js";
 import { clearAll } from "../../Utils/clearFunctions.js";
-import { DFSsync } from "../../Utils/Algos/DFS.jsx";
-import { BFSsync } from "../../Utils/Algos/BFS.jsx";
+import { DFSsync } from "../../Utils/Algos/DFS.js";
+import { BFSsync } from "../../Utils/Algos/BFS.js";
 import { Djikstrasync } from "../../Utils/Algos/Djikstras.js";
 import { clearVisited } from "../../Utils/clearFunctions.js";
 import { clearWeights } from "../../Utils/clearFunctions.js";
@@ -43,7 +43,7 @@ const WALL_OPTIONS = [
   { value: "maze-V", label: "Generate Maze(Vertical-Skew)" },
 ];
 const SPEED_OPTIONS = [
-  { value: 0, label: "Fast" },
+  { value: 4, label: "Fast" },
   { value: 25, label: "Medium" },
   { value: 225, label: "Slow" },
 ];
@@ -62,18 +62,20 @@ const Navbar = ({
     option: (provided, state) => ({
       ...provided,
       backgroundColor: state.isFocused
-        ? "rgb(253, 241, 78,0.5)"
+        ? "var(--turquoise)"
         : state.isSelected
-        ? "rgb(253, 241, 78)"
+        ? "var(--turquoise)"
         : null,
       color:
-        state.isFocused || state.isSelected ? "crimson" : "rgb(253, 241, 78)",
+        state.isFocused || state.isSelected
+          ? "var(--lapis-lazuli)"
+          : "var(--aquamarine)",
     }),
     dropdownIndicator: (provided) => ({
       ...provided,
-      color: "crimson",
+      color: "var(--aquamarine)",
       "&:hover": {
-        color: "black",
+        color: "var(--picton-blue)",
       },
     }),
     indicatorSeparator: (provided) => ({
@@ -96,8 +98,8 @@ const Navbar = ({
       <div className="navbar-header">
         <Select
           options={ALGO_OPTIONS}
-          placeholder="Select An Algorithm..."
-          value={selectedOption}
+          placeholder="Algorithms"
+          value={null}
           onChange={(option) => {
             if (!startCheck) {
               handleSelectedAlgo(null);
@@ -119,7 +121,7 @@ const Navbar = ({
           }}
           isSearchable={false}
           classNamePrefix="navbar-select"
-          className="select-container"
+          className="select-container w-180"
           styles={customStyles}
         ></Select>
         <Select
@@ -145,7 +147,7 @@ const Navbar = ({
           }}
           isSearchable={false}
           classNamePrefix="navbar-select"
-          className="select-container"
+          className="select-container w-160"
           styles={customStyles}
         ></Select>
         <button
@@ -168,7 +170,7 @@ const Navbar = ({
             setStartCheck(false);
             handleSelectedAlgo(null);
           }}
-          className={`nav-btn ${startCheck ? "inactive" : null}`}
+          className={`nav-btn`}
         >
           Clear All
         </button>
@@ -182,7 +184,7 @@ const Navbar = ({
             setStartCheck(false);
             handleSelectedAlgo(null);
           }}
-          className={`nav-btn ${startCheck ? "inactive" : null}`}
+          className={`nav-btn`}
         >
           Clear Visited
         </button>
@@ -200,7 +202,7 @@ const Navbar = ({
             }}
             isSearchable={false}
             classNamePrefix="navbar-select"
-            className="select-container"
+            className="select-container w-120"
             styles={customStyles}
           ></Select>
         </div>

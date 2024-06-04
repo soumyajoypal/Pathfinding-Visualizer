@@ -6,3 +6,27 @@
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
 }
+
+:root {
+  /* COLORS */
+  --mindaro: #d9ed92;
+  --light-green: #b5e48c;
+  --light-green-2: #99d98c;
+  --emerald: #76c893;
+  --keppel: #52b69a;
+  --verdigris: #34a0a4;
+  --bondi-blue: #168aad;
+  --cerulean: #1a759f;
+  --lapis-lazuli: #1e6091;
+  --indigo-dye: #184ee7;
+  --french-violet: #7400b8;
+  --grape: #6930c3;
+  --slate-blue: #5e60c3;
+  --unite-nations-blue: #5390d9;
+  --picton-blue: #4ea8de;
+  --aero: #48bfe3;
+  --sky-blue: #56cfe1;
+  --tifanny-blue: #64dfdf;
+  --turquoise: #72efdd;
+  --aquamarine: #80ffdb;
+}

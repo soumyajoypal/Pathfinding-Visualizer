@@ -14,3 +14,16 @@
     width: 20px;
     height: 20px;
 }
+
+@media screen and (max-width:720px) {
+    .info-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    .info-item span{
+        font-size: 0.6rem;
+    }
+}

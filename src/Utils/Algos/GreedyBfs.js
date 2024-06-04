@@ -47,7 +47,7 @@ const isValid = (r, c, grid) => {
 };
 
 const getCost = (r, c, grid) => {
-  return grid[r][c].weight ? 15 : 0;
+  return grid[r][c].weight ? 15 : 1;
 };
 
 const greedyBFSUtil = (src, dest, nodesArray, path) => {

@@ -40,7 +40,7 @@ const isValid = (r, c, grid) => {
   return true;
 };
 const getCost = (r, c, grid) => {
-  return grid[r][c].weight ? 15 : 0;
+  return grid[r][c].weight ? 15 : 1;
 };
 const Djiskstrasutil = (src, dest, nodesArray, path) => {
   let queue = [];
@@ -58,7 +58,7 @@ const Djiskstrasutil = (src, dest, nodesArray, path) => {
     })
   );
   const start = arr[src.i][src.j];
-  start.cost = 0;
+  start.cost = 1;
   start.parent_i = src.i;
   start.parent_j = src.j;
   queue.push(start);

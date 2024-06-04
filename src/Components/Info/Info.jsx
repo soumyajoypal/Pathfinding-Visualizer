@@ -20,7 +20,7 @@ const Info = ({ isWeighted }) => {
         <li className="info-item">
           <div
             className="node-box"
-            style={{ background: " rgb(128, 39, 212)" }}
+            style={{ background: "var(--french-violet)" }}
           ></div>
           <span>Wall Node</span>
         </li>
@@ -55,11 +55,17 @@ const Info = ({ isWeighted }) => {
           </span>
         </li>
         <li className="info-item">
-          <div className="node-box" style={{ background: "#060874" }}></div>
+          <div
+            className="node-box"
+            style={{ background: "var(--tifanny-blue)" }}
+          ></div>
           <span>Visited Node</span>
         </li>
         <li className="info-item">
-          <div className="node-box" style={{ background: "#f2ff00" }}></div>
+          <div
+            className="node-box"
+            style={{ background: "var(--mindaro)" }}
+          ></div>
           <span>Path Node</span>
         </li>
       </ul>

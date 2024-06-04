@@ -1,0 +1,109 @@
+main {
+    position: relative;
+}
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: var(--lapis-lazuli);
+    background-image: linear-gradient(to right, var(--bondi-blue), var(--cerulean), var(--lapis-lazuli));
+    width: 50%;
+    height: 400px;
+    border-radius: 5px;
+    display: none;
+}
+
+.modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.09);
+    backdrop-filter: blur(1px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-show {
+    display: block;
+}
+
+.modal-box {
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    height: 100%;
+}
+
+.modal-title h1 {
+    color: var(--mindaro);
+}
+
+.modal-subtitle h2 {
+    color: var(--light-green);
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+.modal-text p {
+    font-size: 0.9rem;
+    color: var(--aquamarine);
+    line-height: 1.5;
+}
+
+.modal-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.modal-list__items span {
+    font-weight: 600;
+    color: var(--mindaro);
+}
+
+.modal-list__items p {
+    font-size: 0.8rem;
+}
+
+.modal-buttons {
+    position: absolute;
+    bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.modal-buttons button {
+    width: 100px;
+    height: 40px;
+    object-fit: contain;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--light-green);
+    color: var(--lapis-lazuli);
+}
+
+.modal-buttons button:active {
+    background-color: var(--light-green-2);
+}
+
+.modal-box img {
+    display: block;
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    position: absolute;
+    bottom: -80px;
+}

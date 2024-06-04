@@ -10,25 +10,26 @@
     justify-content: center;
     align-items: center;
     justify-content: space-evenly;
-    background-color: coral;
+    background-color: var(--tifanny-blue);
+    background-image: linear-gradient(to right, var(--aero), var(--tifanny-blue), var(--turquoise));
     padding: 0.7rem;
 }
 
 h3 {
     text-align: center;
     padding-bottom: 0.5rem;
-    color: coral;
+    color: var(--emerald);
     text-transform: capitalize;
 }
 
 .nav-btn {
     border: none;
     outline: none;
-    background-color: rgb(253, 241, 78);
-    padding: 0.8rem 1rem;
+    background-color: var(--lapis-lazuli);
+    padding: 0.9rem 1rem;
     border-radius: 4px;
-    font-size: 0.8rem;
-    color: rgb(231, 67, 7);
+    font-size: 0.9rem;
+    color: var(--aquamarine);
     cursor: pointer;
 }
 
@@ -44,39 +45,100 @@ h3 {
 }
 
 .speed-select span {
-    color: rgb(253, 241, 78);
+    color:var(--lapis-lazuli);
     font-size: 1.1rem;
+}
+
+.w-160 {
+    width: 160px;
+}
+
+.w-180 {
+    width: 150px;
+}
+
+.w-120 {
+    width: 120px;
 }
 
 .select-container .navbar-select__control {
     border: 0;
     outline: 0;
     box-shadow: none;
-    background-color: rgb(253, 241, 78);
+    background-color: var(--lapis-lazuli);
     border-radius: 5px;
 }
 
 .select-container .navbar-select__control .navbar-select__value-container .navbar-select__placeholder,
 .navbar-select__input-container {
-    color: rgb(231, 67, 7);
+    color: var(--aquamarine);
     font-size: 0.8rem;
+    margin: 0;
 }
 
 .select-container .navbar-select__control .navbar-select__single-value {
-    color: rgb(231, 67, 7);
+color: var(--aquamarine);
     font-size: 0.8rem;
 }
 
 .select-container .navbar-select__menu {
     top: 40px;
     margin: 0;
-    background-color: coral;
+    background-color: var(--lapis-lazuli);
     padding: 0;
     font-size: 0.8rem;
 }
 
 .inactive {
-    background-color: red;
-    color: yellow;
+    background-color:var(--aquamarine);
+    color: var(--lapis-lazuli);
+    box-shadow: 0 0 10px var(--picton-blue);
     cursor: none;
+}
+
+@media screen and (max-width:830px) {
+    .nav-btn {
+        font-size: 0.5rem;
+    }
+
+    .speed-select span {
+        font-size: 0.8rem;
+    }
+
+    .select-container .navbar-select__control .navbar-select__value-container .navbar-select__placeholder,
+    .navbar-select__input-container {
+        font-size: 0.6rem;
+    }
+
+    .select-container .navbar-select__control .navbar-select__single-value {
+        font-size: 0.6rem;
+    }
+
+    .select-container .navbar-select__menu {
+        font-size: 0.6rem;
+    }
+}
+
+@media screen and (max-width:700px) {
+    .nav-btn {
+        font-size: 0.4rem;
+        padding-inline: 0.5rem;
+    }
+
+    .speed-select span {
+        font-size: 0.6rem;
+    }
+
+    .select-container .navbar-select__control .navbar-select__value-container .navbar-select__placeholder,
+    .navbar-select__input-container {
+        font-size: 0.4rem;
+    }
+
+    .select-container .navbar-select__control .navbar-select__single-value {
+        font-size: 0.4rem;
+    }
+
+    .select-container .navbar-select__menu {
+        font-size: 0.4rem;
+    }
 }

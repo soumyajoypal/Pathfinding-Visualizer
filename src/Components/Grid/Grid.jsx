@@ -22,7 +22,7 @@ let dest = endpointsGenerator(0);
 let isWeightActive = false;
 let algoSelect = null;
 let weightWall = true;
-let speed = 1;
+let speed = 4;
 
 // GRID COMPONENT
 const Grid = () => {

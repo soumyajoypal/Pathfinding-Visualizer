@@ -6,6 +6,7 @@ const printPath = async (path) => {
     await new Promise((resolve) => setTimeout(resolve, 30));
     await asynchOperation(item);
   }
+  await new Promise((resolve) => setTimeout(resolve, 50));
 };
 
 const asynchOperation = async (item) => {
