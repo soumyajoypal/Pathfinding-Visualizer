@@ -1,6 +1,12 @@
+import { updateGcObject } from "../Components/Grid/Grid";
+
 const clearWalls = (nodesArray) => {
   nodesArray.forEach((item) => {
-    item.classList.remove("obstacle");
+    const type = item.classList.contains("obstacle") ? "obstacle" : "weight";
+    const i = parseInt(item.dataset.row);
+    const j = parseInt(item.dataset.column);
+    updateGcObject(i, j, type, false);
+    item.classList.remove(type);
   });
 };
 export const randomWallsGenerator = (type) => {
@@ -21,9 +27,12 @@ const randomCell = (type) => {
     res.classList.contains("red") ||
     res.classList.contains("green") ||
     res.classList.contains("obstacle") ||
-    res.classList.contains("weight")
+    res.classList.contains("weight") ||
+    res.classList.contains("redNone") ||
+    res.classList.contains("greenNone")
   ) {
     return;
   }
   res.classList.add(type);
+  updateGcObject(i, j, type, true);
 };

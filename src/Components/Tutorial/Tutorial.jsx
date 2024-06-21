@@ -17,6 +17,7 @@ const Tutorial = ({ showModal, setShowModal, modalPage, setModalPage }) => {
       return prev - 1;
     });
   };
+  // const { width, height, bottom, top, left } = modalData[modalPage]?.image;
   return (
     <>
       {showModal ? (
@@ -33,7 +34,7 @@ const Tutorial = ({ showModal, setShowModal, modalPage, setModalPage }) => {
         <div className="modal-box">
           <div className="modal-title">
             <h1>{modalData[modalPage].heading}</h1>
-            <span style={{position:"absolute",top:"20px",right:"20px",color:"var(--mindaro)"}}>{modalPage + 1}/9</span>
+            <span className="pages">{modalPage + 1}/9</span>
           </div>
 
           <div className="modal-subtitle">
@@ -74,7 +75,14 @@ const Tutorial = ({ showModal, setShowModal, modalPage, setModalPage }) => {
               </button>
             </div>
           </div>
-          <img src={modalData[modalPage].image} alt="" />
+
+          {modalData[modalPage]?.image && (
+            <img
+              src={modalData[modalPage].image.img}
+              // style={{ bottom, width, height, top }}
+              alt=""
+            />
+          )}
         </div>
       </div>
     </>

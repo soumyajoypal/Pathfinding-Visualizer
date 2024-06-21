@@ -1,3 +1,4 @@
+import { mazeAnimation } from "../Utils/Animations/mazeAnimation";
 const recursiveDivisionUtil = (
   nodesArray,
   startRow,
@@ -138,22 +139,7 @@ const recursiveDivisionUtil = (
     }
   }
 };
-const mazeAnimation = async (nodesArray) => {
-  for (const node of nodesArray) {
-    const cell = document.querySelector(
-      `[data-row="${node.i}"][data-column="${node.j}"]`
-    );
-    await new Promise((resolve) => setTimeout(resolve, 2));
-    if (
-      !cell.classList.contains("green") &&
-      !cell.classList.contains("red") &&
-      !cell.classList.contains("greenNone") &&
-      !cell.classList.contains("redNone")
-    ) {
-      cell.classList.add("obstacle");
-    }
-  }
-};
+
 export const recursiveDivisionVertical = async () => {
   let nodesArray = [];
   recursiveDivisionUtil(nodesArray, 2, 17, 2, 57, false, "V");

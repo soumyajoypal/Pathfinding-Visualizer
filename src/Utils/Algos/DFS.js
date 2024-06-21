@@ -1,7 +1,7 @@
 import { animate } from "../Animations/animations";
 import printPath from "../Animations/printPath";
-import { clearVisited } from "../clearFunctions";
-import animateSync from "../animateSync";
+import { clearAsync } from "../clearFunctions";
+import { gc } from "../../Components/Grid/Grid";
 class Cell {
   constructor(i, j, obstacle) {
     this.i = i;
@@ -22,11 +22,11 @@ const DFS = async (src, dest, speed) => {
   await printPath(path);
 };
 export const DFSsync = (src, dest) => {
-  clearVisited();
   const path = [];
   let nodesArray = [];
   DFSutil(src, dest, path, nodesArray);
-  animateSync(nodesArray, path);
+  clearAsync(nodesArray, "blue", "selected");
+  clearAsync(path, "yellow", "purple");
 };
 const valid = (i, j, arr) => {
   if (
@@ -44,10 +44,9 @@ const valid = (i, j, arr) => {
 const DFSutil = (src, dest, path, nodesArray) => {
   let arr = Array.from({ length: 20 }, (_, i) =>
     Array.from({ length: 60 }, (_, j) => {
-      const res = document.querySelector(
-        `[data-row="${i}"][data-column="${j}"]`
-      );
-      return new Cell(i, j, res.classList.contains("obstacle"));
+      const fel = gc.wall.find((item) => item.i === i && item.j === j);
+      const isNotObstacle = fel !== undefined;
+      return new Cell(i, j, isNotObstacle);
     })
   );
   const source = arr[src.i][src.j];

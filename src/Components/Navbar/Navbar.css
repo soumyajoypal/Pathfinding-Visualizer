@@ -45,7 +45,7 @@ h3 {
 }
 
 .speed-select span {
-    color:var(--lapis-lazuli);
+    color: var(--lapis-lazuli);
     font-size: 1.1rem;
 }
 
@@ -77,7 +77,7 @@ h3 {
 }
 
 .select-container .navbar-select__control .navbar-select__single-value {
-color: var(--aquamarine);
+    color: var(--aquamarine);
     font-size: 0.8rem;
 }
 
@@ -90,7 +90,7 @@ color: var(--aquamarine);
 }
 
 .inactive {
-    background-color:var(--aquamarine);
+    background-color: var(--aquamarine);
     color: var(--lapis-lazuli);
     box-shadow: 0 0 10px var(--picton-blue);
     cursor: none;
@@ -131,7 +131,7 @@ color: var(--aquamarine);
 
     .select-container .navbar-select__control .navbar-select__value-container .navbar-select__placeholder,
     .navbar-select__input-container {
-        font-size: 0.4rem;
+        font-size: 0.6rem;
     }
 
     .select-container .navbar-select__control .navbar-select__single-value {
@@ -140,5 +140,39 @@ color: var(--aquamarine);
 
     .select-container .navbar-select__menu {
         font-size: 0.4rem;
+    }
+}
+
+@media screen and (max-width:650px) {
+    .navbar-header {
+        flex-wrap: wrap;
+        gap: 0.2rem;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .nav-btn {
+        font-size: 0.6rem;
+    }
+
+    .select-container .navbar-select__control .navbar-select__single-value {
+        font-size: 0.6rem;
+    }
+
+    .select-container .navbar-select__menu {
+        font-size: 0.6rem;
+    }
+
+    .select-container .navbar-select__control {
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .nav-btn {
+        width: 150px;
+    }
+
+    h3 {
+        font-size: 0.8rem;
     }
 }

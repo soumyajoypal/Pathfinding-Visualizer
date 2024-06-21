@@ -23,7 +23,26 @@
         align-items: center;
         gap: 0.3rem;
     }
-    .info-item span{
+
+    .info-item span {
+        font-size: 0.6rem;
+    }
+}
+
+@media screen and (max-width:650px) {
+    .info-list {
+        flex-wrap: wrap;
+        gap: 0.8rem;
+    }
+
+    .info-item {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .info-item span {
         font-size: 0.6rem;
     }
 }

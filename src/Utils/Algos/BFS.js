@@ -1,8 +1,7 @@
 import PrintPath from "../Animations/printPath";
 import { animate } from "../Animations/animations";
-import { clearVisited } from "../clearFunctions";
-import animateSync from "../animateSync";
-
+import { clearAsync } from "../clearFunctions";
+import { gc } from "../../Components/Grid/Grid";
 class Cell {
   constructor(i, j, obstacle) {
     this.i = i;
@@ -13,21 +12,31 @@ class Cell {
     this.obstacle = obstacle;
   }
 }
-
 export const BFS = async (src, dest, speed) => {
   let path = [];
   let nodesArray = [];
   BFSutil(src, dest, nodesArray, path);
-  console.log(nodesArray);
   await animate(nodesArray, speed);
   await PrintPath(path);
 };
 export const BFSsync = (src, dest) => {
-  clearVisited();
   let path = [];
   let nodesArray = [];
   BFSutil(src, dest, nodesArray, path);
-  animateSync(nodesArray, path);
+  clearAsync(nodesArray, "blue", "selected");
+  clearAsync(path, "yellow", "purple");
+};
+export const BFSbomb = async (src, bomb, dest, speed) => {
+  let path1 = [];
+  let path2 = [];
+  let nodesArray1 = [];
+  let nodesArray2 = [];
+  BFSutil(src, bomb, nodesArray1, path1);
+  BFSutil(bomb, dest, nodesArray1, path2);
+  await animate(nodesArray1, speed, "selected2");
+  await animate(nodesArray2, speed);
+  await PrintPath(path1);
+  await PrintPath(path2);
 };
 const isValid = (r, c, grid) => {
   if (
@@ -42,16 +51,17 @@ const isValid = (r, c, grid) => {
   }
   return true;
 };
+
 const BFSutil = (src, dest, nodesArray, path) => {
   let queue = [];
   let arr = Array.from({ length: 20 }, (_, i) =>
     Array.from({ length: 60 }, (_, j) => {
-      const res = document.querySelector(
-        `[data-row="${i}"][data-column="${j}"]`
-      );
-      return new Cell(i, j, res.classList.contains("obstacle"));
+      const fel = gc.wall.find((item) => item.i === i && item.j === j);
+      const isNotObstacle = fel !== undefined;
+      return new Cell(i, j, isNotObstacle);
     })
   );
+  console.log(arr);
   const start = arr[src.i][src.j];
   start.parent_i = src.i;
   start.parent_j = src.j;

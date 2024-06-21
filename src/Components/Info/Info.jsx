@@ -2,6 +2,7 @@ import React from "react";
 import "./Info.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWeightHanging } from "@fortawesome/free-solid-svg-icons";
+
 const Info = ({ isWeighted }) => {
   return (
     <div>
@@ -69,6 +70,7 @@ const Info = ({ isWeighted }) => {
           <span>Path Node</span>
         </li>
       </ul>
+     
     </div>
   );
 };

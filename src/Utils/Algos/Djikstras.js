@@ -1,7 +1,7 @@
 import PrintPath from "../Animations/printPath";
 import { animate } from "../Animations/animations";
-import { clearVisited } from "../clearVisited";
-import animateSync from "../animateSync";
+import { gc } from "../../Components/Grid/Grid";
+import { clearAsync } from "../clearFunctions";
 
 export const Djiskstras = async (src, dest, speed) => {
   let path = [];
@@ -15,11 +15,11 @@ export const Djiskstras = async (src, dest, speed) => {
   await PrintPath(path);
 };
 export const Djikstrasync = (src, dest) => {
-  clearVisited();
   let path = [];
   let nodesArray = [];
   Djiskstrasutil(src, dest, nodesArray, path);
-  animateSync(nodesArray, path);
+  clearAsync(nodesArray, "blue", "selected");
+  clearAsync(path, "yellow", "purple");
 };
 class Cell {
   constructor(i = -1, j = -1, obstacle = false, weight = false) {
@@ -46,17 +46,14 @@ const Djiskstrasutil = (src, dest, nodesArray, path) => {
   let queue = [];
   let arr = Array.from({ length: 20 }, (_, i) =>
     Array.from({ length: 60 }, (_, j) => {
-      const res = document.querySelector(
-        `[data-row="${i}"][data-column="${j}"]`
-      );
-      return new Cell(
-        i,
-        j,
-        res.classList.contains("obstacle"),
-        res.classList.contains("weight")
-      );
+      const wall = gc.wall.find((item) => item.i === i && item.j === j);
+      const weight = gc.weight.find((item) => item.i === i && item.j === j);
+      const isNotObstacle = wall !== undefined;
+      const isNotWeight = weight !== undefined;
+      return new Cell(i, j, isNotObstacle, isNotWeight);
     })
   );
+
   const start = arr[src.i][src.j];
   start.cost = 1;
   start.parent_i = src.i;

@@ -2,6 +2,7 @@
   width: 99%;
   margin-inline: auto;
   height: calc(100vh - 200px);
+  max-height: 650px;
   display: grid;
   grid-template-columns: repeat(60, 1fr);
   grid-template-rows: repeat(20, 1fr);
@@ -40,8 +41,14 @@
   animation: obstacle-animate 0.5s ease-in-out;
 }
 
+.bomb {
+  background-color: black;
+  animation: obstacle-animate 0.3s ease-in-out;
+}
 
-
+.bombNone {
+  background-color: black;
+}
 
 
 
@@ -78,6 +85,40 @@
   100% {
     transform: scale(1);
     background-color: var(--tifanny-blue);
+    border-radius: 0%;
+  }
+}
+
+
+@keyframes selection2 {
+  0% {
+    transform: scale(0.2);
+    background-color: rgb(213, 108, 213);
+    border-radius: 50%;
+  }
+
+  25% {
+    transform: scale(0.4);
+    background-color: rgb(196, 52, 196);
+    border-radius: 35%;
+  }
+
+  50% {
+    transform: scale(0.6);
+    background-color: rgb(160, 11, 160);
+    border-radius: 20%;
+  }
+
+
+  75% {
+    transform: scale(0.8);
+    background-color: rgb(164, 7, 164);
+    border-radius: 5%;
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: purple;
     border-radius: 0%;
   }
 }
@@ -182,6 +223,11 @@
   border-color: var(--lapis-lazuli);
 }
 
+.selected2 {
+  animation: selection2 1.1s ease-in-out forwards;
+  border-color: var(--lapis-lazuli);
+}
+
 .obstacle {
   background-color: var(--french-violet);
   outline: 1px solid var(--slate-blue);
@@ -206,8 +252,36 @@
   }
 }
 
+
 @media screen and (max-width:650px) {
   .grid-container {
-    height: 220px;
+    height: 225px;
+  }
+
+  @keyframes path {
+    0% {
+      background-color: var(--keppel);
+      border: 2px solid white;
+    }
+
+    25% {
+      background-color: var(--emerald);
+      border: 1px solid rgb(223, 220, 220);
+    }
+
+    50% {
+      background-color: var(--light-green-2);
+      border: 1px solid rgb(211, 206, 206);
+    }
+
+    75% {
+      background-color: var(--light-green);
+      border: 1px solid white;
+    }
+
+    100% {
+      background-color: var(--mindaro);
+      outline: 1px solid var(--mindaro);
+    }
   }
 }

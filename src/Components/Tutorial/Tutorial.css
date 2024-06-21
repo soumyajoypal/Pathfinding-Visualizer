@@ -77,10 +77,11 @@ main {
 
 .modal-buttons {
     position: absolute;
+    padding-inline: 1rem;
     bottom: 50px;
     display: flex;
     justify-content: space-between;
-    width: 80%;
+    width: 100%;
 }
 
 .modal-buttons button {
@@ -101,9 +102,81 @@ main {
 
 .modal-box img {
     display: block;
-    width: 200px;
-    height: 200px;
+    width: 30%;
+    height: 300px;
+    transform: scale(1.2);
     object-fit: contain;
     position: absolute;
-    bottom: -80px;
+    bottom: -100px;
+}
+
+.pages {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: var(--mindaro);
+}
+
+@media screen and (max-width:650px) {
+    .modal {
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        height: 250px;
+    }
+
+    .modal-box {
+        padding: 0.5rem 1rem;
+    }
+
+    .modal-title h1 {
+        font-size: 1.2rem;
+    }
+
+    .modal-subtitle h2 {
+        font-size: 0.8rem;
+    }
+
+    .modal-text p {
+        font-size: 0.6rem;
+        line-height: 1.1;
+    }
+
+    .modal-list {
+        gap: 0.5rem;
+    }
+
+    .modal-list__items span {
+        font-weight: 400;
+    }
+
+    .modal-list__items p {
+        font-size: 0.5rem;
+    }
+
+    .modal-buttons {
+        padding-inline: 0.5rem;
+        bottom: 10px;
+    }
+
+    .modal-buttons button {
+        width: 50px;
+        height: 25px;
+        border-radius: 2px;
+        font-size: 0.5rem;
+    }
+
+    .modal-box img {
+        width: 30%;
+        height: 260px;
+        transform: scale(1.1);
+        bottom: -100px;
+        left: 30%;
+    }
+
+    .pages {
+        font-size: 0.8rem;
+        top: 30px;
+    }
 }

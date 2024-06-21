@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Grid.css";
 import Navbar from "../Navbar/Navbar.jsx";
-import { clearVisited } from "../../Utils/clearFunctions.js";
+import { clearAll, clearVisited } from "../../Utils/clearFunctions.js";
 import { faWeightHanging } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -13,6 +13,15 @@ const endpointsGenerator = (value) => {
   }
   return { i, j };
 };
+
+// Board Class
+class GridClass {
+  constructor() {
+    this.wall = [];
+    this.weight = [];
+  }
+}
+
 // GLOBAL VARIABLES
 let start = false;
 let dragStart = { valid: false, el: null };
@@ -23,6 +32,25 @@ let isWeightActive = false;
 let algoSelect = null;
 let weightWall = true;
 let speed = 4;
+let bomb = endpointsGenerator(1);
+let flag = null;
+export let gc = new GridClass();
+export const updateGcObject = (i, j, type, add) => {
+  const obj = { i, j };
+  if (type === "obstacle") {
+    if (add) {
+      gc.wall.push(obj);
+    } else {
+      gc.wall = gc.wall.filter((item) => item.i !== i || item.j !== j);
+    }
+  } else if (type === "weight") {
+    if (add) {
+      gc.weight.push(obj);
+    } else {
+      gc.weight = gc.weight.filter((item) => item.i !== i || item.j !== j);
+    }
+  }
+};
 
 // GRID COMPONENT
 const Grid = () => {
@@ -30,34 +58,58 @@ const Grid = () => {
     weightWall = value;
   };
   const handleDragSrcDest = (e) => {
-    const choice = dragStart.el === "src" ? src : dest;
-    let colorChoice;
+    const choice =
+      dragStart.el === "src" ? src : dragStart.el === "dest" ? dest : bomb;
     const res = document.querySelector(
       `[data-row="${choice.i}"][data-column="${choice.j}"]`
     );
-    if (res.classList.contains("green") || res.classList.contains("red")) {
-      colorChoice = dragStart.el === "src" ? "green" : "red";
-      if (algoSelect) {
-        res.classList.remove(colorChoice);
-        colorChoice = dragStart.el === "src" ? "greenNone" : "redNone";
-      } else {
-        res.classList.remove(colorChoice);
-      }
-    }
+    let colorChoice;
+
     if (
-      res.classList.contains("greenNone") ||
-      res.classList.contains("redNone")
+      res.classList.contains("green") ||
+      res.classList.contains("red") ||
+      res.classList.contains("bomb")
     ) {
-      colorChoice = dragStart.el === "src" ? "greenNone" : "redNone";
+      colorChoice =
+        dragStart.el === "src"
+          ? "green"
+          : dragStart.el === "dest"
+          ? "red"
+          : "bomb";
+      res.classList.remove(colorChoice);
+      if (algoSelect) {
+        colorChoice =
+          dragStart.el === "src"
+            ? "greenNone"
+            : dragStart.el === "dest"
+            ? "redNone"
+            : "bombNone";
+      }
+    } else if (
+      res.classList.contains("greenNone") ||
+      res.classList.contains("redNone") ||
+      res.classList.contains("bombNone")
+    ) {
+      colorChoice =
+        dragStart.el === "src"
+          ? "greenNone"
+          : dragStart.el === "dest"
+          ? "redNone"
+          : "bombNone";
+      res.classList.remove(colorChoice);
       if (!algoSelect) {
-        res.classList.remove(colorChoice);
-        colorChoice = dragStart.el === "src" ? "green" : "red";
-      } else {
-        res.classList.remove(colorChoice);
+        colorChoice =
+          dragStart.el === "src"
+            ? "green"
+            : dragStart.el === "dest"
+            ? "red"
+            : "bomb";
       }
     }
+
     e.currentTarget.classList.add(colorChoice);
   };
+
   const handleMouseOver = (e) => {
     e.preventDefault();
     if (!dragStart.valid && !wallDrag) {
@@ -65,14 +117,18 @@ const Grid = () => {
     }
     const row = parseInt(e.target.dataset.row);
     const col = parseInt(e.target.dataset.column);
-    if ((row === src.i && col == src.j) || (row == dest.i && col == dest.j)) {
+    if (
+      (row === src.i && col == src.j) ||
+      (row == dest.i && col == dest.j) ||
+      (row == bomb.i && col == bomb.j)
+    ) {
       return;
     }
     if (!dragStart.valid) {
-      //brute force lekha
       const wallOption = isWeightActive === false ? "obstacle" : "weight";
       if (e.currentTarget.classList.contains(wallOption)) {
         e.currentTarget.classList.remove(wallOption);
+        updateGcObject(row, col, wallOption, false);
         return;
       }
       if (e.currentTarget.classList.contains("blue")) {
@@ -92,30 +148,53 @@ const Grid = () => {
         e.currentTarget.classList.contains("weight")
       ) {
         e.currentTarget.classList.remove("weight");
+        updateGcObject(row, col, "weight", false);
       }
       if (
         wallOption === "weight" &&
         e.currentTarget.classList.contains("obstacle")
       ) {
         e.currentTarget.classList.remove("obstacle");
+        updateGcObject(row, col, "obstacle", false);
       }
       e.currentTarget.classList.add(wallOption);
+      updateGcObject(row, col, wallOption, true);
+      return;
+    }
+    if (e.currentTarget.classList.contains("weight")) {
       return;
     }
     if (
-      e.currentTarget.classList.contains("obstacle") ||
-      e.currentTarget.classList.contains("weight")
+      !algoSelect &&
+      (e.currentTarget.classList.contains("obstacle") ||
+        e.currentTarget.classList.contains("weight"))
     ) {
       return;
+    }
+    if (flag) {
+      const el = dragStart.el === "src" ? src : dest;
+      const res = document.querySelector(
+        `[data-row="${el.i}"][data-column="${el.j}"]`
+      );
+      res.classList.add(flag);
+      updateGcObject(el.i, el.j, flag, true);
+      flag = null;
+    }
+    if (e.currentTarget.classList.contains("obstacle")) {
+      const option = "obstacle";
+      flag = option;
+      e.currentTarget.classList.remove(option);
+      updateGcObject(row, col, option, false);
     }
     handleDragSrcDest(e);
     if (dragStart.el === "src") {
       src = { i: row, j: col };
-    } else {
+    } else if (dragStart.el === "dest") {
       dest = { i: row, j: col };
+    } else {
+      bomb = { i: row, j: col };
     }
     if (algoSelect) {
-      console.log("sex");
       const syncAlgo = algoSelect?.value.SYNC;
       syncAlgo(src, dest);
     }
@@ -134,6 +213,10 @@ const Grid = () => {
       dragStart = { valid: true, el: "dest" };
       return;
     }
+    if (i === bomb.i && j === bomb.j) {
+      dragStart = { valid: true, el: "bomb" };
+      return;
+    }
     wallDrag = true;
   };
 
@@ -141,10 +224,12 @@ const Grid = () => {
     dragStart = { valid: false, el: null };
     wallDrag = false;
   };
+
   const handleObstacle = (i, j, e) => {
     if (
       (i === src.i && j === src.j) ||
       (i === dest.i && j === dest.j) ||
+      (i === bomb.i && j === bomb.j) ||
       (algoSelect && start)
     ) {
       return;
@@ -152,10 +237,12 @@ const Grid = () => {
     const res = e.currentTarget.classList;
     if (res.contains("obstacle")) {
       res.remove("obstacle");
+      updateGcObject(i, j, "obstacle", false);
       return;
     }
     if (res.contains("weight")) {
       res.remove("weight");
+      updateGcObject(i, j, "weight", false);
       return;
     }
     const options = ["purple", "selected", "blue", "yellow"];
@@ -163,22 +250,32 @@ const Grid = () => {
       if (res.contains(opt)) {
         res.remove(opt);
         res.add("obstacle");
+        updateGcObject(i, j, "obstacle", true);
         return;
       }
     }
     if (isWeightActive) {
       res.add("weight");
+      updateGcObject(i, j, "weight", true);
       return;
     }
     res.add("obstacle");
+    updateGcObject(i, j, "obstacle", true);
   };
+
   const handleStart = (value) => {
     start = value;
   };
+
   const handleSpeed = (value) => {
     speed = value;
   };
-  const handleSelectedAlgo = async (selectedOption, setStartCheck) => {
+
+  const handleSelectedAlgo = async (
+    selectedOption,
+    setStartCheck,
+    bombCheck = false
+  ) => {
     if (start || !selectedOption) {
       algoSelect = null;
       return;
@@ -186,13 +283,39 @@ const Grid = () => {
     clearVisited();
     start = true;
     setStartCheck(true);
-    const algoFunction = selectedOption?.value.ASYNC;
+    let algoFunction;
+    if (!bombCheck) {
+      algoFunction = selectedOption?.value.ASYNC;
+    } else {
+      algoFunction = selectedOption?.value.BOMB;
+    }
     algoSelect = selectedOption;
     setTimeout(async () => {
-      await algoFunction(src, dest, speed);
+      if (!bombCheck) {
+        await algoFunction(src, dest, speed);
+      } else {
+        await algoFunction(src, bomb, dest, speed);
+      }
       start = false;
       setStartCheck(false);
     }, 500);
+  };
+  const handleBomb = (value, setBomb) => {
+    setBomb(!value);
+
+    if (!value) {
+      clearAll();
+      bomb = { i: 9, j: 29 };
+      const res = document.querySelector(
+        `[data-row="${bomb.i}"][data-column="${bomb.j}"]`
+      );
+      res.classList.add("bomb");
+    } else {
+      const res = document.querySelector(
+        `[data-row="${bomb.i}"][data-column="${bomb.j}"]`
+      );
+      res.classList.remove("bomb");
+    }
   };
   useEffect(() => {
     const handleWeightWall = (e) => {
@@ -206,6 +329,7 @@ const Grid = () => {
       isWeightActive = false;
     });
   }, []);
+
   return (
     <>
       <Navbar
@@ -215,6 +339,7 @@ const Grid = () => {
         handleStart={handleStart}
         checkWeightedAlgo={checkWeightedAlgo}
         handleSpeed={handleSpeed}
+        handleBomb={handleBomb}
       ></Navbar>
       <MemoizedGridContainer
         handleMouseDown={handleMouseDown}
@@ -224,6 +349,7 @@ const Grid = () => {
     </>
   );
 };
+
 const GridContainer = ({
   handleObstacle,
   handleMouseDown,
@@ -262,5 +388,6 @@ const GridContainer = ({
     </div>
   );
 };
+
 const MemoizedGridContainer = React.memo(GridContainer);
 export default Grid;
