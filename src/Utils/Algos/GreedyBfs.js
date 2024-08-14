@@ -11,7 +11,7 @@ export const GreedyBFS = async (src, dest, speed) => {
   let nodesArray = [];
   greedyBFSUtil(src, dest, nodesArray, path);
   if (path.length === 0) {
-    alert("Path Not Available");
+    alert("Path to Destination Node not available");
     return;
   }
   await animate(nodesArray, speed);
@@ -24,6 +24,40 @@ export const GreedyBFSsync = (src, dest) => {
   greedyBFSUtil(src, dest, nodesArray, path);
   clearAsync(nodesArray, "blue", "selected");
   clearAsync(path, "yellow", "purple");
+};
+
+export const GreedyBFSbomb = async (src, bomb, dest, speed) => {
+  let path1 = [];
+  let path2 = [];
+  let nodesArray1 = [];
+  let nodesArray2 = [];
+  greedyBFSUtil(src, bomb, nodesArray1, path1);
+  greedyBFSUtil(bomb, dest, nodesArray2, path2);
+  if (path1.length === 0) {
+    alert("Path to Bomb Node Not Available");
+    return;
+  }
+  if (path2.length === 0) {
+    alert("Path to Destination Node Not Available");
+    return;
+  }
+  await animate(nodesArray1, speed, "selected2");
+  await new Promise((resolve) => setTimeout(resolve, 80));
+  await animate(nodesArray2, speed);
+  await PrintPath(path1, "path2");
+  await PrintPath(path2);
+};
+export const GreedyBFSBombsync = (src, bomb, dest) => {
+  let path1 = [];
+  let path2 = [];
+  let nodesArray1 = [];
+  let nodesArray2 = [];
+  greedyBFSUtil(src, bomb, nodesArray1, path1);
+  greedyBFSUtil(bomb, dest, nodesArray2, path2);
+  clearAsync(nodesArray1, "violet", "selected2");
+  clearAsync(nodesArray2, "blue", "selected");
+  clearAsync(path1, "yellow2", "path2");
+  clearAsync(path2, "yellow", "purple");
 };
 
 class Cell {

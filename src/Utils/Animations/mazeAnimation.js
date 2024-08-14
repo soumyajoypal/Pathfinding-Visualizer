@@ -9,7 +9,9 @@ export const mazeAnimation = async (nodesArray) => {
       !cell.classList.contains("green") &&
       !cell.classList.contains("red") &&
       !cell.classList.contains("greenNone") &&
-      !cell.classList.contains("redNone")
+      !cell.classList.contains("redNone") &&
+      !cell.classList.contains("bomb") &&
+      !cell.classList.contains("bombNone")
     ) {
       cell.classList.add("obstacle");
       updateGcObject(node.i, node.j, "obstacle", true);

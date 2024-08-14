@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import "./Navbar.css";
-import { BFS, BFSbomb } from "../../Utils/Algos/BFS.js";
+import { BFS, BFSBombsync, BFSbomb } from "../../Utils/Algos/BFS.js";
 import { randomWallsGenerator } from "../../Utils/randomWalls";
-import DFS from "../../Utils/Algos/DFS.js";
-import { Djiskstras } from "../../Utils/Algos/Djikstras.js";
+import DFS, { DFSBomb, DFSBombsync } from "../../Utils/Algos/DFS.js";
+import {
+  DjikstrasBombsync,
+  Djikstrasbomb,
+  Djiskstras,
+} from "../../Utils/Algos/Djikstras.js";
 import { clearAll } from "../../Utils/clearFunctions.js";
 import { DFSsync } from "../../Utils/Algos/DFS.js";
 import { BFSsync } from "../../Utils/Algos/BFS.js";
@@ -13,28 +17,54 @@ import { clearWeights } from "../../Utils/clearFunctions.js";
 import { recursiveDivision } from "../../MazeAlgos/recursiveDivision.js";
 import { recursiveDivisionHorizontal } from "../../MazeAlgos/recursiveHorizontal.js";
 import { recursiveDivisionVertical } from "../../MazeAlgos/recursiveVertical.js";
-import { Astarsync } from "../../Utils/Algos/Astar.js";
+import {
+  AstarBombsync,
+  Astarbomb,
+  Astarsync,
+} from "../../Utils/Algos/Astar.js";
 import { Astar } from "../../Utils/Algos/Astar.js";
-import { GreedyBFS } from "../../Utils/Algos/GreedyBfs.js";
+import {
+  GreedyBFS,
+  GreedyBFSBombsync,
+  GreedyBFSbomb,
+} from "../../Utils/Algos/GreedyBfs.js";
 import { GreedyBFSsync } from "../../Utils/Algos/GreedyBfs.js";
 import Select from "react-select";
 import Info from "../Info/Info.jsx";
 const ALGO_OPTIONS = [
   {
-    value: { ASYNC: BFS, SYNC: BFSsync, BOMB: BFSbomb },
+    value: { ASYNC: BFS, SYNC: BFSsync, BOMB: BFSbomb, BOMBSYNC: BFSBombsync },
     label: "Breadth-First Search",
   },
-  { value: { ASYNC: DFS, SYNC: DFSsync }, label: "Depth-First Search" },
   {
-    value: { ASYNC: Djiskstras, SYNC: Djikstrasync },
+    value: { ASYNC: DFS, SYNC: DFSsync, BOMB: DFSBomb, BOMBSYNC: DFSBombsync },
+    label: "Depth-First Search",
+  },
+  {
+    value: {
+      ASYNC: Djiskstras,
+      SYNC: Djikstrasync,
+      BOMB: Djikstrasbomb,
+      BOMBSYNC: DjikstrasBombsync,
+    },
     label: "Djikstra's Algorithm",
   },
   {
-    value: { ASYNC: Astar, SYNC: Astarsync },
+    value: {
+      ASYNC: Astar,
+      SYNC: Astarsync,
+      BOMB: Astarbomb,
+      BOMBSYNC: AstarBombsync,
+    },
     label: "A* Algorithm",
   },
   {
-    value: { ASYNC: GreedyBFS, SYNC: GreedyBFSsync },
+    value: {
+      ASYNC: GreedyBFS,
+      SYNC: GreedyBFSsync,
+      BOMB: GreedyBFSbomb,
+      BOMBSYNC: GreedyBFSBombsync,
+    },
     label: "Greedy BFS",
   },
 ];

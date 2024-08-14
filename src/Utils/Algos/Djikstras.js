@@ -6,9 +6,9 @@ import { clearAsync } from "../clearFunctions";
 export const Djiskstras = async (src, dest, speed) => {
   let path = [];
   let nodesArray = [];
-  Djiskstrasutil(src, dest, nodesArray, path);
+  Djikstrasutil(src, dest, nodesArray, path);
   if (path.length === 0) {
-    alert("Path Not Available");
+    alert("Path to Destination Node not available");
     return;
   }
   await animate(nodesArray, speed);
@@ -17,9 +17,42 @@ export const Djiskstras = async (src, dest, speed) => {
 export const Djikstrasync = (src, dest) => {
   let path = [];
   let nodesArray = [];
-  Djiskstrasutil(src, dest, nodesArray, path);
+  Djikstrasutil(src, dest, nodesArray, path);
   clearAsync(nodesArray, "blue", "selected");
   clearAsync(path, "yellow", "purple");
+};
+export const Djikstrasbomb = async (src, bomb, dest, speed) => {
+  let path1 = [];
+  let path2 = [];
+  let nodesArray1 = [];
+  let nodesArray2 = [];
+  Djikstrasutil(src, bomb, nodesArray1, path1);
+  Djikstrasutil(bomb, dest, nodesArray2, path2);
+  if (path1.length === 0) {
+    alert("Path to Bomb Node Not Available");
+    return;
+  }
+  if (path2.length === 0) {
+    alert("Path to Destination Node Not Available");
+    return;
+  }
+  await animate(nodesArray1, speed, "selected2");
+  await new Promise((resolve) => setTimeout(resolve, 80));
+  await animate(nodesArray2, speed);
+  await PrintPath(path1, "path2");
+  await PrintPath(path2);
+};
+export const DjikstrasBombsync = (src, bomb, dest) => {
+  let path1 = [];
+  let path2 = [];
+  let nodesArray1 = [];
+  let nodesArray2 = [];
+  Djikstrasutil(src, bomb, nodesArray1, path1);
+  Djikstrasutil(bomb, dest, nodesArray2, path2);
+  clearAsync(nodesArray1, "violet", "selected2");
+  clearAsync(nodesArray2, "blue", "selected");
+  clearAsync(path1, "yellow2", "path2");
+  clearAsync(path2, "yellow", "purple");
 };
 class Cell {
   constructor(i = -1, j = -1, obstacle = false, weight = false) {
@@ -42,7 +75,7 @@ const isValid = (r, c, grid) => {
 const getCost = (r, c, grid) => {
   return grid[r][c].weight ? 15 : 1;
 };
-const Djiskstrasutil = (src, dest, nodesArray, path) => {
+const Djikstrasutil = (src, dest, nodesArray, path) => {
   let queue = [];
   let arr = Array.from({ length: 20 }, (_, i) =>
     Array.from({ length: 60 }, (_, j) => {

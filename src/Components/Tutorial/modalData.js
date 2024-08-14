@@ -3,7 +3,7 @@ import slide2 from "../../assets/slide2.png";
 import slide3 from "../../assets/slide3.png";
 import slide4 from "../../assets/slide4.gif";
 import slide5 from "../../assets/slide5.gif";
-// import slide6 from "../../assets/slide6.png";
+import slide8 from "../../assets/slide8.gif";
 
 export const modalData = [
   {
@@ -98,16 +98,22 @@ export const modalData = [
     },
   },
   {
-    heading: "More Features To Explore",
+    heading: 'Click on the "Add Bomb" button',
     subheading:
-      "Leverage the navbar buttons to visualize algorithms and perform various actions seamlessly!",
-    text: 'Easily manage your path finding experience using the navbar buttons. Clear the current path, reset walls and weights, clear the entire board, and adjust visualization speed—all at your fingertips. To revisit this tutorial, simply click "Path finding Visualizer" at the top.',
-
+      "A bomb node is a designated point in a pathfinding algorithm where the algorithm prioritizes its handling before continuing to find the target node",
+    text: "Introducing a bomb alters the pathfinding approach of the selected algorithm. Specifically, the algorithm will initially prioritize locating and neutralizing the bomb before proceeding to find the target node.",
+    image: {
+      img: slide8,
+      width: "200px",
+      height: "200px",
+      bottom: "-80px",
+      top: "0px",
+    },
   },
   {
     heading: "Adjusting Settings",
     subheading: "Fine-Tune Your Experience",
-    text: "Adjust settings such as grid size, speed of visualization, and algorithm parameters to better understand their behavior and optimize performance.",
+    text: "Adjust settings such as speed of visualization, and algorithm parameters to better understand their behavior and optimize performance.",
   },
   {
     heading: "Finish",

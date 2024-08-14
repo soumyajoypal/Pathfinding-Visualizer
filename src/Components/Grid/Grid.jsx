@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Grid.css";
 import Navbar from "../Navbar/Navbar.jsx";
-import { clearAll, clearVisited } from "../../Utils/clearFunctions.js";
+import { clearVisited } from "../../Utils/clearFunctions.js";
 import { faWeightHanging } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -31,8 +31,9 @@ let dest = endpointsGenerator(0);
 let isWeightActive = false;
 let algoSelect = null;
 let weightWall = true;
-let speed = 4;
+let speed = 8;
 let bomb = endpointsGenerator(1);
+let bombActive = false;
 let flag = null;
 export let gc = new GridClass();
 export const updateGcObject = (i, j, type, add) => {
@@ -143,6 +144,18 @@ const Grid = () => {
       if (e.currentTarget.classList.contains("purple")) {
         e.currentTarget.classList.remove("purple");
       }
+      if (e.currentTarget.classList.contains("path2")) {
+        e.currentTarget.classList.remove("path2");
+      }
+      if (e.currentTarget.classList.contains("yellow2")) {
+        e.currentTarget.classList.remove("yellow2");
+      }
+      if (e.currentTarget.classList.contains("selected2")) {
+        e.currentTarget.classList.remove("selected2");
+      }
+      if (e.currentTarget.classList.contains("violet")) {
+        e.currentTarget.classList.remove("violet");
+      }
       if (
         wallOption === "obstacle" &&
         e.currentTarget.classList.contains("weight")
@@ -172,7 +185,8 @@ const Grid = () => {
       return;
     }
     if (flag) {
-      const el = dragStart.el === "src" ? src : dest;
+      const el =
+        dragStart.el === "src" ? src : dragStart.el === "bomb" ? bomb : dest;
       const res = document.querySelector(
         `[data-row="${el.i}"][data-column="${el.j}"]`
       );
@@ -193,6 +207,11 @@ const Grid = () => {
       dest = { i: row, j: col };
     } else {
       bomb = { i: row, j: col };
+    }
+    if (algoSelect && bombActive) {
+      const syncAlgo = algoSelect?.value.BOMBSYNC;
+      syncAlgo(src, bomb, dest);
+      return;
     }
     if (algoSelect) {
       const syncAlgo = algoSelect?.value.SYNC;
@@ -229,7 +248,7 @@ const Grid = () => {
     if (
       (i === src.i && j === src.j) ||
       (i === dest.i && j === dest.j) ||
-      (i === bomb.i && j === bomb.j) ||
+      (bombActive && i === bomb.i && j === bomb.j) ||
       (algoSelect && start)
     ) {
       return;
@@ -302,19 +321,31 @@ const Grid = () => {
   };
   const handleBomb = (value, setBomb) => {
     setBomb(!value);
-
+    clearVisited();
     if (!value) {
-      clearAll();
+      bombActive = true;
       bomb = { i: 9, j: 29 };
       const res = document.querySelector(
         `[data-row="${bomb.i}"][data-column="${bomb.j}"]`
       );
+      if (res.classList.contains("weight")) {
+        res.classList.remove("weight");
+      }
+      if (res.classList.contains("obstacle")) {
+        res.classList.remove("obstacle");
+      }
       res.classList.add("bomb");
     } else {
+      bombActive = false;
+      algoSelect = false;
       const res = document.querySelector(
         `[data-row="${bomb.i}"][data-column="${bomb.j}"]`
       );
-      res.classList.remove("bomb");
+      if (res.classList.contains("bomb")) {
+        res.classList.remove("bomb");
+      } else {
+        res.classList.remove("bombNone");
+      }
     }
   };
   useEffect(() => {

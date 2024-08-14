@@ -16,7 +16,16 @@ const clearUtil = (classes) => {
   });
 };
 export const clearVisited = () => {
-  const classes = ["purple", "selected", "blue", "yellow"];
+  const classes = [
+    "purple",
+    "selected",
+    "blue",
+    "yellow",
+    "selected2",
+    "path2",
+    "yellow2",
+    "violet",
+  ];
   clearUtil(classes);
 };
 export const clearAll = () => {
@@ -27,6 +36,10 @@ export const clearAll = () => {
     "blue",
     "yellow",
     "weight",
+    "selected2",
+    "path2",
+    "yellow2",
+    "violet",
   ];
   clearUtil(classes);
 };
@@ -44,7 +57,11 @@ const find = (i, j, nodesArray) => {
 export const clearAsync = (nodesArray, one, two) => {
   const domArray = document.querySelectorAll(".node");
   domArray.forEach((item) => {
-    if (item.classList.contains("green") || item.classList.contains("red")) {
+    if (
+      item.classList.contains("green") ||
+      item.classList.contains("red") ||
+      item.classList.contains("bomb")
+    ) {
       return;
     }
     const i = item.dataset.row;

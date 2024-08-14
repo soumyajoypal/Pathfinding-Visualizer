@@ -29,7 +29,9 @@ const randomCell = (type) => {
     res.classList.contains("obstacle") ||
     res.classList.contains("weight") ||
     res.classList.contains("redNone") ||
-    res.classList.contains("greenNone")
+    res.classList.contains("greenNone") ||
+    res.classList.contains("bomb") ||
+    res.classList.contains("bombNone")
   ) {
     return;
   }

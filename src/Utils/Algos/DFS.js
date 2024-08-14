@@ -15,7 +15,7 @@ const DFS = async (src, dest, speed) => {
   let nodesArray = [];
   DFSutil(src, dest, path, nodesArray);
   if (path.length === 0) {
-    alert("No path available");
+    alert("Path to Destination Node not available");
     return;
   }
   await animate(nodesArray, speed);
@@ -27,6 +27,39 @@ export const DFSsync = (src, dest) => {
   DFSutil(src, dest, path, nodesArray);
   clearAsync(nodesArray, "blue", "selected");
   clearAsync(path, "yellow", "purple");
+};
+export const DFSBomb = async (src, bomb, dest, speed) => {
+  let path1 = [];
+  let path2 = [];
+  let nodesArray1 = [];
+  let nodesArray2 = [];
+  DFSutil(src, bomb, path1, nodesArray1);
+  DFSutil(bomb, dest, path2, nodesArray2);
+  if (path1.length === 0) {
+    alert("Path to Bomb Node Not Available");
+    return;
+  }
+  if (path2.length === 0) {
+    alert("Path to Destination Node Not Available");
+    return;
+  }
+  await animate(nodesArray1, speed, "selected2");
+  await new Promise((resolve) => setTimeout(resolve, 80));
+  await animate(nodesArray2, speed);
+  await printPath(path1, "path2");
+  await printPath(path2);
+};
+export const DFSBombsync = (src, bomb, dest) => {
+  let path1 = [];
+  let path2 = [];
+  let nodesArray1 = [];
+  let nodesArray2 = [];
+  DFSutil(src, bomb, path1, nodesArray1);
+  DFSutil(bomb, dest, path2, nodesArray2);
+  clearAsync(nodesArray1, "violet", "selected2");
+  clearAsync(nodesArray2, "blue", "selected");
+  clearAsync(path1, "yellow2", "path2");
+  clearAsync(path2, "yellow", "purple");
 };
 const valid = (i, j, arr) => {
   if (

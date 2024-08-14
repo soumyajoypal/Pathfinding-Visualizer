@@ -16,6 +16,10 @@ export const BFS = async (src, dest, speed) => {
   let path = [];
   let nodesArray = [];
   BFSutil(src, dest, nodesArray, path);
+  if (path.length === 0) {
+    alert("Path to Destination Node Not Available");
+    return;
+  }
   await animate(nodesArray, speed);
   await PrintPath(path);
 };
@@ -32,11 +36,32 @@ export const BFSbomb = async (src, bomb, dest, speed) => {
   let nodesArray1 = [];
   let nodesArray2 = [];
   BFSutil(src, bomb, nodesArray1, path1);
-  BFSutil(bomb, dest, nodesArray1, path2);
+  BFSutil(bomb, dest, nodesArray2, path2);
+  if (path1.length === 0) {
+    alert("Path to Bomb Node Not Available");
+    return;
+  }
+  if (path2.length === 0) {
+    alert("Path to Destination Node Not Available");
+    return;
+  }
   await animate(nodesArray1, speed, "selected2");
+  await new Promise((resolve) => setTimeout(resolve, 200));
   await animate(nodesArray2, speed);
-  await PrintPath(path1);
+  await PrintPath(path1, "path2");
   await PrintPath(path2);
+};
+export const BFSBombsync = (src, bomb, dest) => {
+  let path1 = [];
+  let path2 = [];
+  let nodesArray1 = [];
+  let nodesArray2 = [];
+  BFSutil(src, bomb, nodesArray1, path1);
+  BFSutil(bomb, dest, nodesArray2, path2);
+  clearAsync(nodesArray1, "violet", "selected2");
+  clearAsync(nodesArray2, "blue", "selected");
+  clearAsync(path1, "yellow2", "path2");
+  clearAsync(path2, "yellow", "purple");
 };
 const isValid = (r, c, grid) => {
   if (
