@@ -78,7 +78,7 @@ export const modalData = [
     subheading: `Click to add a wall and hold 'W' while clicking to add weight. Explore various maze and pattern options from the "Mazes & Patterns" drop-down menu.`,
     text: "Walls act as barriers, prohibiting paths from crossing through them. Conversely, weights increase traversal cost but are not impassable. In this application, navigating through a weighted node incurs a cost of 15.",
     image: {
-      img: slide4,
+      img: "https://res.cloudinary.com/dzjbxojvu/image/upload/v1724094641/wmjrzltxp0oosoppybsp.gif",
       width: "200px",
       height: "200px",
       bottom: "-80px",
@@ -90,7 +90,7 @@ export const modalData = [
     subheading: "Click and drag the start and target nodes to move them.",
     text: "Keep in mind that even after an algorithm completes its run, you can still drag nodes around. This feature enables you to instantly visualize different paths on the grid.",
     image: {
-      img: slide5,
+      img: "https://res.cloudinary.com/dzjbxojvu/image/upload/v1724094645/etr1j7fbc0vxwbifjt2q.gif",
       width: "200px",
       height: "200px",
       bottom: "-80px",
@@ -103,7 +103,7 @@ export const modalData = [
       "A bomb node is a designated point in a pathfinding algorithm where the algorithm prioritizes its handling before continuing to find the target node",
     text: "Introducing a bomb alters the pathfinding approach of the selected algorithm. Specifically, the algorithm will initially prioritize locating and neutralizing the bomb before proceeding to find the target node.",
     image: {
-      img: slide8,
+      img: "https://res.cloudinary.com/dzjbxojvu/image/upload/v1724094638/ortm5zxoowvafvhweura.gif",
       width: "200px",
       height: "200px",
       bottom: "-80px",
